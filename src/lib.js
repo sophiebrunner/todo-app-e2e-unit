@@ -2,16 +2,9 @@
 export function isToDoDone(todo) {
   return todo.done === true;
 }
-export function isDuplicate(todo, todos) {
-  todo = todo.toLowerCase();
-
-  for (let i = 0; i < todos.length; i++) {
-    const currentTodo = todos[i];
-    if (currentTodo.todo.toLowerCase() === todo) {
-      return true;
-    }
-  }
-  return false;
+export function isDuplicate(array, string) {
+  string = string.toLowerCase();
+  return array.some((item) => item.toLowerCase() === string);
 }
 export function isWord(todo) {
   return todo.length === 0;
@@ -52,7 +45,12 @@ export function initApp() {
     }
 
     // duplicate check
-    if (isDuplicate(newTodoText, todos)) {
+    const toDoTxts = [];
+    for (let i = 0; i < todos.length; i++) {
+      toDoTxts.push(todos[i].todo);
+    }
+    const checkForDuplicate = isDuplicate(toDoTxts, newTodoText);
+    if (checkForDuplicate) {
       return;
     }
 
